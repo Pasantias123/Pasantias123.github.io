@@ -1,0 +1,142 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casino Zeus</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="title"><h1 class="letra">Casino Zeus</h1></div>
+
+    
+    <div class="botones">
+    <button type="button" class="btn btn-danger p-1 mt-0" id="inicio">Volver al inicio</button>
+    </div>
+
+    <script>
+        document.getElementById("inicio").addEventListener("click", function() {
+        window.location.href = "index.html";
+    });
+    </script>
+    <div class="contenedor-grande">
+        <div class="juego">
+            <h1 class="subtitulos1">Cuanto queres jugar?</h1>
+            <input type="number" value="Mano" id="mano" class="form-control inputini">
+        </div>
+
+        <div class="juego">
+            <h1 class="subtitulos2">A que color? escribi rojo o negro</h1>
+            <input type="text" value="" id="colorApostado" class="form-control inputini">
+        </div>
+        <div class="submit"><input type="submit" class="btn btn-danger" id="datosHTML"></div>
+        
+    </div>
+
+    <div id="mostrarSaldo"></div>
+    <div id="numero"></div>
+
+    
+
+
+
+    <script>
+    let numeroAleatorio;
+    let valorMano;
+    let valorColorApostado;
+
+    function mostrar() {
+    let saldoInicial = parseInt(localStorage.getItem('saldoInicial'));
+    mostrarSaldo.textContent = "Tu saldo despues de la apuesta es de " + saldoInicial;
+    
+}
+
+mostrar();
+
+    document.getElementById("datosHTML").addEventListener("click", function() {
+    
+    valorMano = document.getElementById("mano").value;
+    valorColorApostado = document.getElementById("colorApostado").value;
+    valorMano = parseInt(valorMano)
+
+    
+        ruleta(valorColorApostado, valorMano)
+    
+    
+
+
+    mostrar();
+});
+    
+
+    
+
+
+    
+function ruleta(valorColorApostado, valorMano) {
+    
+    numeroAleatorio = Math.floor(Math.random() * 37);
+    console.log("Salio el numero", numeroAleatorio)
+    let color;
+
+    if ([1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36]. includes(numeroAleatorio)) {
+    color = "rojo";
+    console.log("Que es rojo")
+        
+    }   
+     else if (numeroAleatorio === 0) {
+          color = "verde";
+          console.log("Que es verde")
+    }
+     else {
+         color = "negro";
+         console.log("Que es negro")
+    }
+
+    if (valorColorApostado === color) {
+        console.log("Vos apostaste al color ", valorColorApostado)
+        valorMano = parseInt(valorMano)
+        let saldoInicial = parseInt(localStorage.getItem('saldoInicial'));
+        let saldoFinal = saldoInicial + valorMano;
+        
+        
+        console.log("Le pegaste al color!")
+        console.log("Tu nuevo saldo", saldoFinal)
+
+        localStorage.setItem('saldoInicial', saldoFinal);
+     }
+
+      else if (valorColorApostado !== color) {
+        console.log("El color que llego del input es", valorColorApostado)
+        valorMano = parseInt(valorMano)
+        let saldoInicial = parseInt(localStorage.getItem('saldoInicial'));
+        let saldoFinal = saldoInicial - valorMano; 
+        
+        
+        
+        
+        console.log("Le erraste al color!")
+        console.log("Tu nuevo saldo es", saldoFinal)
+
+        localStorage.setItem('saldoInicial', saldoFinal);
+        
+      }
+
+      
+      
+      
+  }
+ 
+  
+
+</script>
+    
+
+</body>
+<script src="script.js"></script>
+</html>
